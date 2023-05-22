@@ -1,11 +1,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.jdevs</groupId>
-	<artifactId>studentapp</artifactId>
+	<groupId>com.mt</groupId>
+	<artifactId>maven-web-application</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<build>
+	<name>maven-web-application</name>
+	<description>Maven Web Project for Java Project</description>
+	<organization>
+		<name>Mithun Technologies</name>
+		<url>http://mithuntechnologies.com/</url>
+	</organization>
+<build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
       <plugin>
@@ -94,12 +100,12 @@
 	<distributionManagement>
 	    <repository>
 	      <id>nexus</id>
-	      <name>student-release</name>
+	      <name>Mithun Technologies Releases Nexus Repository</name>
 	      <url>http://54.249.27.31:8081/repository/student-rel/</url>
 	    </repository>
 	    <snapshotRepository>
 	      <id>nexus</id>
-	      <name>student-snapshot</name>
+	      <name>Mithun Technologies Snapshot Nexus Repository </name>
 	      <url>http://54.249.27.31:8081/repository/student-snap/</url>
 	    </snapshotRepository>
 	</distributionManagement>
