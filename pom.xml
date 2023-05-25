@@ -23,45 +23,36 @@
           <failOnMissingWebXml>false</failOnMissingWebXml>
         </configuration>
       </plugin>
+      <plugin>
+      <groupId>org.sonarsource.scanner.maven</groupId>
+      <artifactId>sonar-maven-plugin</artifactId>
+      <version>3.9.1.2184</version>
+    </plugin>
     </plugins>
   </build>
-   <profiles>
-<profile>
-<id>sonar</id>
-<activation>
-<activeByDefault>true</activeByDefault>
-</activation>
-<properties>
-<!-- Optional URL to server. Default value is http://localhost:9000 -->
-<sonar.host.url>
-http://192.168.2.174:9000
-</sonar.host.url>
-</properties>
-</profile>
-</profiles>
-    <!-- https://mvnrepository.com/artifact/org.sonarsource.scanner.maven/sonar-maven-plugin -->
-<dependency>
-<groupId>org.sonarsource.scanner.maven</groupId>
-<artifactId>sonar-maven-plugin</artifactId>
-<version>3.2</version>
-</dependency>
    <distributionManagement>
         <repository>
             <id>deployment</id>
-            <name>Internal Releases</name>
-            <url>http://54.249.27.31:8081/repository/student-rel/</url>
+            <name>student snapshots Releases</name>
+            <url>http://13.115.174.24:8081/repository/student-release/</url>
         </repository>
         <snapshotRepository>
             <id>deployment</id>
-            <name>Internal Snapshot Releases</name>
-            <url>http://54.249.27.31:8081/repository/student-snap/</url>
+            <name>student Snapshot </name>
+            <url>http://13.115.174.24:8081/repository/student-snapshot/</url>
         </snapshotRepository>
     </distributionManagement>
+  <properties>
+  <!-- Other properties -->
+  <sonar.host.url>http://3.113.12.210:9000/</sonar.host.url>
+  <sonar.login>squ_40124a12c66d4fa643d81b389bd93aeee6525673</sonar.login>  
+     <sonar.java.binaries>src/</sonar.java.binaries>
+</properties>
   <dependencies>
   	<dependency>
   		<groupId>javax.servlet</groupId>
   		<artifactId>javax.servlet-api</artifactId>
-  		<version>3.0.1</version>
+      <version>3.0.1</version>
   	</dependency>
   </dependencies>
 </project>
