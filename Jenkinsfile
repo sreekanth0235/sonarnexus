@@ -1,54 +1,21 @@
 node{
     
     stage('Clone repo'){
-        git credentialsId: 'GIT-Credentials', url: 'https://github.com/sreekanth0235/sonarnexus.git'
+        git credentialsId: 'GIT-Credentials', url: 'https://github.com/shailajakalai/mavenrepo.git'
     }
     
-    stage('Maven Build'){
-        def mavenHome = tool name: "Maven-3.8.6", type: "maven"
-        def mavenCMD = "${mavenHome}/bin/mvn"
-        sh "${mavenCMD} clean package"
+    stage('SonarQube analysis') {
+    def scannerHome = tool 'sonar-server';
+    withSonarQubeEnv('sonar-server') {
+      sh "${scannerHome}/bin/sonar-scanner \
+      -D sonar.login=admin \
+      -D sonar.password=password \
+      -D sonar.projectKey=studentapp \
+      -D sonar.exclusions=vendor/**,resources/**,**/*.java \
+      -D sonar.host.url=http://43.206.242.15:9000/"
     }
-    
-    stage('SonarQube analysis') {       
-        withSonarQubeEnv('sonar') {
-       	sh "mvn sonar:sonar"    	
-    }
-        
+  }
     stage('upload war to nexus'){
-	steps{
-		nexusArtifactUploader artifacts: [	
-			[
-				artifactId: '01-maven-web-app',
-				classifier: '',
-				file: 'target/01-maven-web-app.war',
-				type: war		
-			]	
-		],
-		credentialsId: 'nexus3',
-		groupId: 'in.ashokit',
-		nexusUrl: '',
-		protocol: 'http',
-		repository: 'ashokit-release'
-		version: '1.0.0'
-	}
+        nexusArtifactUploader artifacts: [[artifactId: 'studentapp', classifier: '', file: 'target/studentapp-2.5-SNAPSHOT.war', type: 'war']], credentialsId: 'nexusrepo', groupId: 'com.jdevs', nexusUrl: '13.114.54.181:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'student-snapshot', version: '2.5-SNAPSHOT'
 }
-    
-    stage('Build Image'){
-        sh 'docker build -t ashokit/mavenwebapp .'
-    }
-    
-    stage('Push Image'){
-        withCredentials([string(credentialsId: 'DOCKER-CREDENTIALS', variable: 'DOCKER_CREDENTIALS')]) {
-            sh 'docker login -u ashokit -p ${DOCKER_CREDENTIALS}'
-        }
-        sh 'docker push ashokit/mavenwebapp'
-    }
-    
-    stage('Deploy App'){
-        kubernetesDeploy(
-            configs: 'maven-web-app-deploy.yml',
-            kubeconfigId: 'Kube-Config'
-        )
-    }    
 }
