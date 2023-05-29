@@ -1,7 +1,7 @@
 node{
     
     stage('Clone repo'){
-        git credentialsId: 'GIT-Credentials', url: 'https://github.com/shailajakalai/mavenrepo.git'
+        git credentialsId: 'GIT-Credentials', url: 'https://github.com/sreekanth0235/sonarnexus.git'
     }
     
     stage('SonarQube analysis') {
